@@ -1,0 +1,4 @@
+/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/tools/CMakeFiles/tools.dir
+/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/tools/CMakeFiles/scripts.dir
+/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/tools/CMakeFiles/edit_cache.dir
+/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/tools/CMakeFiles/rebuild_cache.dir

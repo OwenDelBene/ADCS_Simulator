@@ -1,0 +1,2 @@
+/usr/bin/ar qc lib/libGLEW.a "CMakeFiles/glew_s.dir/mnt/c/users/owend/documents/c++/ADCSSimulator/Linking/glew-2.1.0/src/glew.c.o"
+/usr/bin/ranlib lib/libGLEW.a

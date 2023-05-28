@@ -1,0 +1,1 @@
+/usr/bin/c++  -Wall -Wextra -Wfloat-conversion -O3 -DNDEBUG CMakeFiles/polygontest.dir/polygontest.cpp.o -o polygontest  -Wl,-rpath,/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/build/src ../src/libGeographicLib.so.24.1.0 
