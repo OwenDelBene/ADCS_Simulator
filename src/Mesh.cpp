@@ -33,23 +33,23 @@ void Mesh::Draw(Shader& shader, Camera& camera)
 
 	// Keep track of how many of each type of textures we have
 	unsigned int numDiffuse = 0;
-	//unsigned int numSpecular = 0;
+	unsigned int numSpecular = 0;
 
 	//gluSphere()
 
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
-		unsigned int num;
-		auto type = (textures[i].type);
-		//if (type == "diffuse")
-		//{
+		std::string num;
+		std::string type = (textures[i].type);
+		if (type == "diffuse")
+		{
 			num = numDiffuse++;
-		//}
-		//else if (type == "specular")
-		//{
-		//	num = std::to_string(numSpecular++);
-		//}
-		textures[i].texUnit(shader, std::to_string((type + num)).c_str(), i);
+		}
+		else if (type == "specular")
+		{
+			num = std::to_string(numSpecular++);
+		}
+		textures[i].texUnit(shader, (type + num).c_str(), i);
 		textures[i].Bind();
 	}
 	// Take care of the camera Matrix

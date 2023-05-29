@@ -24,8 +24,8 @@
 //}
 
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 1200;
+const unsigned int height = 1200;
 
 
 void printvec(std::vector<double> vec)
@@ -137,7 +137,7 @@ int main()
 	// Texture data
 	Texture textures[]
 	{
-		Texture("Earth.png", (GLenum)1, 0, GL_RGBA, GL_UNSIGNED_BYTE),
+		Texture("Earth.png", "diffuse" , 0, GL_RGBA, GL_UNSIGNED_BYTE),
 		//Texture("Earth2.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 		
 	};

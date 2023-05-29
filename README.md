@@ -6,8 +6,12 @@ Visualizer of satellite orbits
 - Bdot Controller with magnetorquers
 
 
-## Compile with
-`g++ *.c *.cpp -lglfw -L /usr/local/lib -lGeographicLib`
+## In the src directory compile with
+```
+make
+```
+
+
 
 ## Dependencies
 GeographicLib: https://geographiclib.sourceforge.io/C++/doc/install.html
