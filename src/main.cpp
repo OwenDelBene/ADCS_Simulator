@@ -6,6 +6,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <fstream>
+#include <exception>
 
 
 
@@ -97,8 +98,16 @@ int main()
 
 	
 
-	
-	
+/*
+	double lat = 27.99, lon = 86.93, h = 8820.00, t = 2012.00;
+	double Bx, By, Bz;
+	model(t, lat, lon, h, Bx, By, Bz);
+	double H, F, D, I;
+	GeographicLib::MagneticModel::FieldComponents(Bx, By, Bz, H, F, D, I);
+
+	cout << H << " " << F << " " << D << " " << " " << I << endl;
+
+*/	
 
 	
 
@@ -165,7 +174,7 @@ int main()
 	
 	//initial angles
 	glm::vec3 initAngles(0.0, 0.0, 0.0);
-	glm::vec3 initAngularVelocity(0, 0, 0.003);
+	glm::vec3 initAngularVelocity(0.8, 0.5, 0.3);
 	
 	glm::quat initQuat(initAngles);
 
@@ -232,7 +241,7 @@ int main()
 
 	
 	int time = 0; 
-	int end = 5400;
+	int end = 5400 * 10;
 	// Main while loop
 	std::ofstream f("test.csv");
 	while (!glfwWindowShouldClose(window) && (time < end) )
@@ -253,7 +262,7 @@ int main()
 	//	std::cout << "Velocity: " << AGS6.Velocity.x << " " << AGS6.Velocity.y << " " << AGS6.Velocity.z << std::endl;
 	//	f << AGS6.pos.x << "," << AGS6.pos.z << '\n';
 		f << AGS6.bodyMagneticField.x << "," << AGS6.bodyMagneticField.y << "," << AGS6.bodyMagneticField.z << "\n";
-		printvec(AGS6.stateVec);
+	//	printvec(AGS6.stateVec);
 		AGS6.CircularOrbit(Earth.mass, Sun.pos, Sun.color, SatShader, time); 
 
 		

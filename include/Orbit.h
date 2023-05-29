@@ -7,6 +7,7 @@
 #include <iostream>
 //#include <cstlib>
 
+#include <GeographicLib/MagneticModel.hpp>
 #define MU 3.986e14
 #define RE 6378100
 
@@ -17,6 +18,8 @@ class Orbit
 {
 public:
 
+	//magnetic field	
+	GeographicLib::MagneticModel model = GeographicLib::MagneticModel("wmm2020");
 
 	float mass;
     glm::mat3 Inertia = glm::mat3(0.9, 0, 0,

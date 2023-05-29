@@ -73,7 +73,7 @@ vector<double> operator+(double lhs, vector<double> rhs)
 vector<double> operator+(vector<double> lhs, vector<double> rhs)
 {
 	vector<double> retval;
-	for (int i=0; i< lhs.size(); i++)
+	for (unsigned int i=0; i< lhs.size(); i++)
 	{
 		retval.push_back(lhs.at(i) + rhs.at(i));
 	}
@@ -275,8 +275,11 @@ glm::vec3 Orbit::bFieldI()
 	
 	//double fm[6];
 	//igrfm(fm);
-	glm::vec3 NED(0, 0, 0);
-	//NED = NED * 1e-9;
+	double BE, BN, BD;
+	this->model(2020., lattitude, longitude, altitude,BE, BN, BD );
+
+	glm::vec3 NED(BN, BE, -BD);
+	NED = NED * 1e-9;
 //	std::cout << "NED: " << NED.x << " " << NED.y << " " << NED.z << std::endl;
 	return TIB() * NED;
 

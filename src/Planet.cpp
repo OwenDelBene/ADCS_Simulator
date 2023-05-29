@@ -19,7 +19,7 @@ Planet::Planet(   float mass, float radius, unsigned int rings, unsigned int sec
 	//Planet::vertices.resize(rings * sectors * 12);
 	//std::vector<Vertex>::iterator itr = vertices.begin();
 	int i = 0;
-	for (int r = 0; r < rings; r++) for (int s = 0; s < sectors; s++)
+	for (unsigned int r = 0; r < rings; r++) for (unsigned int s = 0; s < sectors; s++)
 	{
 		float const x = cos(2 * M_PI * s * S) * sin(M_PI * r * R);
 		float const y = sin(-M_PI_2 + M_PI * r * R);
@@ -37,7 +37,7 @@ Planet::Planet(   float mass, float radius, unsigned int rings, unsigned int sec
 	Planet::verts = { Planet::vertices, Planet::vertices + sizeof(Planet::vertices) / sizeof(Vertex) };
 
 	i = 0;
-	for (int r = 0; r < rings; r++) for (int s = 0; s < sectors; s++)
+	for (unsigned int r = 0; r < rings; r++) for (unsigned int s = 0; s < sectors; s++)
 	{
 
 		//indices[i++] = r * sectors + s;

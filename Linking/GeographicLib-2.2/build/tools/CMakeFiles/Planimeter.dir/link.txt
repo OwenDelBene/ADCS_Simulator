@@ -1,1 +1,0 @@
-/usr/bin/c++  -Wall -Wextra -Wfloat-conversion -O3 -DNDEBUG CMakeFiles/Planimeter.dir/Planimeter.cpp.o -o Planimeter  -Wl,-rpath,/mnt/c/users/owend/Downloads/GeographicLib-2.2/GeographicLib-2.2/build/src: ../src/libGeographicLib.so.24.1.0 
