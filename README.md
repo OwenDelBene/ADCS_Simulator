@@ -1,4 +1,4 @@
-# OrbitSimulator
+# Overview
 Visualizer of satellite orbits  
 
 - 3D graphics engine with OpenGL
@@ -6,9 +6,11 @@ Visualizer of satellite orbits
 - Bdot Controller with magnetorquers
 
 
-## In the src directory compile with
+## Compile and run
 ```
+cd src
 make
+./ADCS_Sim
 ```
 
 
