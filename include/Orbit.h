@@ -51,16 +51,16 @@ public:
 
 
     //sensor parameters
-    double MagScaleBias = 4.0e-7; //T
+    double MagScaleBias = 4.0e-9; //T
     double MagFieldBias = MagScaleBias*  (-1 + 2.0 * (rand() % 100) / 100.0f );
     
-    double MagScaleNoise = 1e-7;
+    double MagScaleNoise = 1e-9;
     double MagFieldNoise = MagScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 	
-    double AngleScaleBias = .001; //rad/s
+    double AngleScaleBias = .0001; //rad/s
     double AngleFieldBias = AngleScaleBias * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
-    double AngleScaleNoise = .0005;
+    double AngleScaleNoise = .00005;
     double AngleFieldNoise = AngleScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
 

@@ -138,7 +138,7 @@ int main()
 	Texture textures[]
 	{
 		Texture("Earth.png", "diffuse" , 0, GL_RGBA, GL_UNSIGNED_BYTE),
-		//Texture("Earth2.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
+		Texture("Earth2.png", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE)
 		
 	};
 
@@ -167,7 +167,7 @@ int main()
 	// initial conditions
 	float initalAltitude = 400000.0f;
 	float initalVelocity = sqrt(MU / (initalAltitude + RE));
-	float inclination = 0.0f; //degrees
+	float inclination = 45.0f; //degrees
 	glm::vec3 initalPos = glm::vec3(initalAltitude + RE, 0.0f, 0.0f);
 	glm::vec3 initialVel = glm::vec3(0.0f, initalVelocity * sin(inclination * M_PI / 180.0f), initalVelocity * cos(inclination * M_PI / 180.0f));
 	
@@ -241,9 +241,10 @@ int main()
 
 	
 	int time = 0; 
-	int end = 5400 * 10;
+	int end = 5400 ;
 	// Main while loop
 	std::ofstream f("test.csv");
+	std::ofstream file("rates.csv");
 	while (!glfwWindowShouldClose(window) && (time < end) )
 	{
 		 
@@ -262,7 +263,8 @@ int main()
 	//	std::cout << "Velocity: " << AGS6.Velocity.x << " " << AGS6.Velocity.y << " " << AGS6.Velocity.z << std::endl;
 	//	f << AGS6.pos.x << "," << AGS6.pos.z << '\n';
 		f << AGS6.bodyMagneticField.x << "," << AGS6.bodyMagneticField.y << "," << AGS6.bodyMagneticField.z << "\n";
-	//	printvec(AGS6.stateVec);
+		//printvec(AGS6.stateVec);
+		file << AGS6.pqr.x << "," << AGS6.pqr.y << "," << AGS6.pqr.z << endl;
 		AGS6.CircularOrbit(Earth.mass, Sun.pos, Sun.color, SatShader, time); 
 
 		
@@ -282,7 +284,7 @@ int main()
 		time+=1;
 	}
 	f.close();
-
+	file.close();
 
 
 	// Delete all the objects we've created

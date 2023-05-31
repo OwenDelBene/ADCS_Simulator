@@ -115,7 +115,7 @@ std::vector<double> Orbit::TwoBodyODE(float time, vector<double> statevec)
 void Orbit::RK4(int time)
 {
 
-	int step=1;
+	float step=.5;
 	 
 
 
@@ -374,9 +374,9 @@ void Orbit::Bdot()
 	glm::vec3 current = k_bdot * glm::cross(Wfilter, Bfilter) * (1.0f / n*A);
 //	std::cout << "Wfiler" << Wfilter.x << "Bfilter" << Bfilter.x << std::endl;
 	//saturation of current command
-	if ((abs(current.x) + abs(current.y) + abs(current.z)) > .04f)
+	if ((abs(current.x) + abs(current.y) + abs(current.z)) > .08f)
 	{
-		current = 0.04f * (current / glm::length(current)); 
+		current = 0.08f * (current / glm::length(current)); 
 	}
 
 
