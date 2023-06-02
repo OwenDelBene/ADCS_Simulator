@@ -24,8 +24,8 @@
 //}
 
 
-const unsigned int width = 1200;
-const unsigned int height = 1200;
+const unsigned int width = 1600;
+const unsigned int height = 1000;
 
 
 void printvec(std::vector<double> vec)
@@ -180,7 +180,7 @@ int main()
 
 	
 	
-	Sat AGS6(0.42f, 1.0f, 1.0f, 1.0f, initalPos, initialVel,glm::vec4(initQuat.w, initQuat.x, initQuat.y, initQuat.z), initAngularVelocity );
+	Sat AGS6(0.42f, 0.90f, 1.1f, 1.2f, initalPos, initialVel,glm::vec4(initQuat.w, initQuat.x, initQuat.y, initQuat.z), initAngularVelocity );
 	
 	
 	
@@ -241,7 +241,7 @@ int main()
 
 	
 	int time = 0; 
-	int end = 5400 ;
+	int end = 5400 * 10 ;
 	// Main while loop
 	std::ofstream f("test.csv");
 	std::ofstream file("rates.csv");

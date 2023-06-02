@@ -115,7 +115,7 @@ std::vector<double> Orbit::TwoBodyODE(float time, vector<double> statevec)
 void Orbit::RK4(int time)
 {
 
-	float step=.5;
+	float step=1;
 	 
 
 
@@ -279,7 +279,7 @@ glm::vec3 Orbit::bFieldI()
 	this->model(2020., lattitude, longitude, altitude,BE, BN, BD );
 
 	glm::vec3 NED(BN, BE, -BD);
-	NED = NED * 1e-9;
+	NED = NED * 1e-9 ;
 //	std::cout << "NED: " << NED.x << " " << NED.y << " " << NED.z << std::endl;
 	return TIB() * NED;
 
@@ -383,8 +383,9 @@ void Orbit::Bdot()
 	glm::vec3 muB = current * n * A;
 
 
-	M_mag = glm::cross(muB, bodyMagneticField);
-
-//	std::cout << "output torque" << M_mag.x << std::endl;
+	M_mag = glm::cross(muB, bodyMagneticField) * 1e5;
+	
+	std::cout << "output current" << current.x << " " << current.y << " " << current.z <<  std::endl;
+	std::cout << "output torque" << M_mag.x << " " << M_mag.y << " " << M_mag.z <<  std::endl;
 }
 
