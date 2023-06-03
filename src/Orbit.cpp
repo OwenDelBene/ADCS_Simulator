@@ -389,3 +389,9 @@ void Orbit::Bdot()
 	std::cout << "output torque" << M_mag.x << " " << M_mag.y << " " << M_mag.z <<  std::endl;
 }
 
+
+void Orbit::Disturbances()
+{
+    this->MagneticDisturbance = this->residualDipole * bodyMagneticField;
+}
+

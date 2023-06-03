@@ -177,10 +177,10 @@ int main()
 	glm::vec3 initAngularVelocity(0.8, 0.5, 0.3);
 	
 	glm::quat initQuat(initAngles);
-
+    
+	glm::vec4 initAttitude(initQuat.w, initQuat.x, initQuat.y, initQuat.z);
 	
-	
-	Sat AGS6(0.42f, 0.90f, 1.1f, 1.2f, initalPos, initialVel,glm::vec4(initQuat.w, initQuat.x, initQuat.y, initQuat.z), initAngularVelocity );
+	Sat AGS6(0.42f, 0.50f, 1.5f, 1.0f, initalPos, initialVel,initAttitude, initAngularVelocity );
 	
 	
 	
