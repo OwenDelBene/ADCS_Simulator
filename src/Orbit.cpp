@@ -383,7 +383,7 @@ void Orbit::Bdot()
 	glm::vec3 muB = current * n * A;
 
 
-	M_mag = glm::cross(muB, bodyMagneticField) * 1e5;
+	M_mag = glm::cross(muB, bodyMagneticField) * 1e3;
 	
 	std::cout << "output current" << current.x << " " << current.y << " " << current.z <<  std::endl;
 	std::cout << "output torque" << M_mag.x << " " << M_mag.y << " " << M_mag.z <<  std::endl;

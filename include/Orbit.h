@@ -67,7 +67,7 @@ public:
     //controller parameters
     glm::vec3 M_mag = glm::vec3(0.0);//magnetorquer moment
     glm::vec3 M_wheel = glm::vec3(0.0); //reaction wheel moment
-    float k_bdot = 67200.0f;
+    float k_bdot = 672000.0f;
 
     
     float n = 84;
