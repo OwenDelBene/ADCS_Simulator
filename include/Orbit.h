@@ -64,6 +64,16 @@ public:
     double AngleFieldNoise = AngleScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
 
+    //Disturbance Torques
+    glm::vec3 MagneticDisturbance = glm::vec3(0.0);
+    glm::vec3 AtmosphericDisturbance = glm::vec3(0.0);
+    glm::vec3 GravityDisturbance = glm::vec3(0.0);
+    glm::vec3 SolarDisturbance = glm::vec3(0.0);
+
+    //Disturbance Torque parameters
+    float residualDipole = 0.5; //A* m^2
+
+
     //controller parameters
     glm::vec3 M_mag = glm::vec3(0.0);//magnetorquer moment
     glm::vec3 M_wheel = glm::vec3(0.0); //reaction wheel moment
@@ -102,6 +112,11 @@ public:
     void Sensor();
     void SensorFilter();
     void Bdot();
+    void Disturbances();
+
+
+
+
 
 private:
     void _calculateAngles();
