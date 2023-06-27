@@ -13,15 +13,6 @@
 
 // X = left to right | Y= Down to Up | Z = back to front
 
-//TODO ORBIT MECHANICS, SAT GEN, EARTH TEX, MOON?
-
-
-//extern "C"
-//{
-//	void igrf13syn(double* isv, double* date, double* itype, double* alt, double* colat, double* elong, double* x, double* y, double* z, double* f);
-//	void DMDDEC(double* I, double* M, double* X);
-//	void DDECDM(double* X, double* I, double* M);
-//}
 
 
 const unsigned int width = 1600;
@@ -42,55 +33,6 @@ void printvec(std::vector<double> vec)
 #define MU 3.986e14
 
 using std::cout, std::endl;
-// Vertices coordinates
-//Vertex vertices[] =
-////std::vector<Vertex> vertices=
-//{ //               COORDINATES           /            COLORS          /           TexCoord         /       NORMALS         //
-//	Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
-//	Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
-//	Vertex{glm::vec3(1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
-//	Vertex{glm::vec3(1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
-//};
-
-
-
-// Indices for vertices order
-//GLuint indices[] =
-//{
-//	0, 1, 2,
-//	0, 2, 3
-//};
-
-
-
-//Vertex lightVertices[] =
-//{ //     COORDINATES     //
-//	Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
-//	Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
-//	Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
-//	Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
-//	Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
-//	Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
-//	Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
-//	Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
-//};
-//
-//GLuint lightIndices[] =
-//{
-//	0, 1, 2,
-//	0, 2, 3,
-//	0, 4, 7,
-//	0, 7, 3,
-//	3, 7, 6,
-//	3, 6, 2,
-//	2, 6, 5,
-//	2, 5, 1,
-//	1, 5, 4,
-//	1, 4, 0,
-//	4, 5, 6,
-//	4, 6, 7
-//};
-
 
 
 int main()
@@ -98,16 +40,6 @@ int main()
 
 	
 
-/*
-	double lat = 27.99, lon = 86.93, h = 8820.00, t = 2012.00;
-	double Bx, By, Bz;
-	model(t, lat, lon, h, Bx, By, Bz);
-	double H, F, D, I;
-	GeographicLib::MagneticModel::FieldComponents(Bx, By, Bz, H, F, D, I);
-
-	cout << H << " " << F << " " << D << " " << " " << I << endl;
-
-*/	
 
 	
 
@@ -165,6 +97,7 @@ int main()
 
 	//Satellites
 	// initial conditions
+	// Translational Dynamics
 	float initalAltitude = 400000.0f;
 	float initalVelocity = sqrt(MU / (initalAltitude + RE));
 	float inclination = 45.0f; //degrees
@@ -172,7 +105,7 @@ int main()
 	glm::vec3 initialVel = glm::vec3(0.0f, initalVelocity * sin(inclination * M_PI / 180.0f), initalVelocity * cos(inclination * M_PI / 180.0f));
 	
 	
-	//initial angles
+	//Rotational Dynamics
 	glm::vec3 initAngles(0.0, 0.0, 0.0);
 	glm::vec3 initAngularVelocity(0.8, 0.5, 0.3);
 	
@@ -242,9 +175,8 @@ int main()
 	
 	int time = 0; 
 	int end = 5400 * 10 ;
+	int dt = 1;
 	// Main while loop
-	std::ofstream f("test.csv");
-	std::ofstream file("rates.csv");
 	while (!glfwWindowShouldClose(window) && (time < end) )
 	{
 		 
@@ -258,13 +190,6 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		// Draws different meshes
-	//	std::cout << "Position: " <<AGS6.pos.x << " " << AGS6.pos.y << " " << AGS6.pos.z << std::endl;
-	//	std::cout << "Velocity: " << AGS6.Velocity.x << " " << AGS6.Velocity.y << " " << AGS6.Velocity.z << std::endl;
-	//	f << AGS6.pos.x << "," << AGS6.pos.z << '\n';
-		f << AGS6.bodyMagneticField.x << "," << AGS6.bodyMagneticField.y << "," << AGS6.bodyMagneticField.z << "\n";
-		//printvec(AGS6.stateVec);
-		file << AGS6.pqr.x << "," << AGS6.pqr.y << "," << AGS6.pqr.z << endl;
 		AGS6.CircularOrbit(Earth.mass, Sun.pos, Sun.color, SatShader, time); 
 
 		
@@ -281,10 +206,8 @@ int main()
 		// Take care of all GLFW events
 		glfwPollEvents();
 
-		time+=1;
+		time+=dt;
 	}
-	f.close();
-	file.close();
 
 
 	// Delete all the objects we've created

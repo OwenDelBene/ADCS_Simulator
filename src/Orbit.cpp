@@ -227,7 +227,6 @@ glm::mat3 Orbit::TIBQuat()
 	double q2 = this->q0123.z;
 	double q3 = this->q0123.w;
 	
-//	std::cout << "printvec: " << q0 << " " << q1 << " " << q2 << " " << q3  << std::endl;
 	
 
 	double q02 = pow(q0, 2);
@@ -263,24 +262,11 @@ void Orbit::_calculateAngles()
 glm::vec3 Orbit::bFieldI()
 {
 	_calculateAngles();
-	//initialize igrf
-	/*          by  CALL sigrf(YEAR), CALL sdgrf(YEAR) or CALL spgrf(YEAR) .    */
-	//sigrf(1955.);
-	//spgrf(1975.);
-	//double F;
-	//igrfc(lattitude, longitude, altitude, &F);
-
-	//std::cout << "lat long alt: " << lattitude << " " << longitude << " " << altitude << std::endl;
-
-	
-	//double fm[6];
-	//igrfm(fm);
 	double BE, BN, BD;
 	this->model(2020., lattitude, longitude, altitude,BE, BN, BD );
 
 	glm::vec3 NED(BN, BE, -BD);
 	NED = NED * 1e-9 ;
-//	std::cout << "NED: " << NED.x << " " << NED.y << " " << NED.z << std::endl;
 	return TIB() * NED;
 
 
@@ -337,16 +323,12 @@ void Orbit::Sensor()
 	 AngleFieldNoise = AngleScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
 	 glm::vec3 inertialMagneticField = bFieldI();
-//	 std::cout << "Binertial: " << inertialMagneticField.x << std::endl;
 	 glm::mat3 temp = TIBQuat();
 	 bodyMagneticField = temp * inertialMagneticField;
 
-//	 std::cout << "temp: " << temp[0][0]  << " " << temp[1][1] << " " << temp[2][2] << std::endl;
 
 	 Bmeasure = bodyMagneticField +  (MagFieldBias + MagFieldNoise);
 	 Wmeasure =   pqr + (AngleFieldBias + AngleFieldNoise);
-//	 std::cout << "mag bias, noise" << MagFieldBias << " " << MagFieldNoise << std::endl;
-//	 std::cout << "bodyMag: " << bodyMagneticField.x << std::endl;
 	 SensorFilter();
 
 
@@ -366,13 +348,11 @@ void Orbit::SensorFilter()
 	glm::vec3 W_biasEstimate(0.0);
 	Bfilter = Bfilter * (1 - s) + s * (Bmeasure - B_biasEstimate);
 	Wfilter = Wfilter * (1 - s) + s * (Wmeasure - W_biasEstimate);
-//	std::cout << "Bmeasure: " << Bmeasure.x << std::endl;
 }
 
 void Orbit::Bdot()
 {
 	glm::vec3 current = k_bdot * glm::cross(Wfilter, Bfilter) * (1.0f / n*A);
-//	std::cout << "Wfiler" << Wfilter.x << "Bfilter" << Bfilter.x << std::endl;
 	//saturation of current command
 	if ((abs(current.x) + abs(current.y) + abs(current.z)) > .08f)
 	{
@@ -385,8 +365,6 @@ void Orbit::Bdot()
 
 	M_mag = glm::cross(muB, bodyMagneticField) * 1e3;
 	
-	std::cout << "output current" << current.x << " " << current.y << " " << current.z <<  std::endl;
-	std::cout << "output torque" << M_mag.x << " " << M_mag.y << " " << M_mag.z <<  std::endl;
 }
 
 
