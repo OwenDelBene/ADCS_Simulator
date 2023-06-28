@@ -10,6 +10,8 @@
 
 
 
+#define RE 6378100
+#define MU 3.986e14
 
 // X = left to right | Y= Down to Up | Z = back to front
 
@@ -29,8 +31,6 @@ void printvec(std::vector<double> vec)
 	std::cout << std::endl;
 }
 
-#define RE 6378100
-#define MU 3.986e14
 
 using std::cout, std::endl;
 
@@ -107,7 +107,7 @@ int main()
 	
 	//Rotational Dynamics
 	glm::vec3 initAngles(0.0, 0.0, 0.0);
-	glm::vec3 initAngularVelocity(0.8, 0.5, 0.3);
+	glm::vec3 initAngularVelocity(0.15, 0.1, 0.1);
 	
 	glm::quat initQuat(initAngles);
     
@@ -173,10 +173,15 @@ int main()
 
 
 	
-	int time = 0; 
-	int end = 5400 * 10 ;
-	int dt = 1;
+	float time = 0; 
+	float end = 5400  ;
+	float dt = 1;
 	// Main while loop
+	std::ofstream file;
+	std::ofstream file2;
+	file.open("MagData3.csv");
+	file2.open("rates.csv");
+	int nextMagUpdate = 0; 
 	while (!glfwWindowShouldClose(window) && (time < end) )
 	{
 		 
@@ -190,11 +195,16 @@ int main()
 		// Updates and exports the camera matrix to the Vertex Shader
 		camera.updateMatrix(45.0f, 0.1f, 100.0f);
 
-		AGS6.CircularOrbit(Earth.mass, Sun.pos, Sun.color, SatShader, time); 
+		AGS6.CircularOrbit(Earth.mass, Sun.pos, Sun.color, SatShader, time, dt); 
 
-		
-		 
-		
+		if (time == nextMagUpdate){
+			glm::vec3 mag = AGS6.Bmeasure;
+			glm::vec3 igrf = AGS6.inertialMagneticField;
+
+			file << igrf.x << ',' << igrf.y << ',' << igrf.z << ',' << ',' << mag.x << ',' << mag.y << ',' << mag.z <<','<<','<< AGS6.MagFieldBias<<','<< AGS6.MagFieldNoise <<'\n';
+			nextMagUpdate +=10;
+		}
+		file2 << AGS6.pqr.x << ',' << AGS6.pqr.y << ',' << AGS6.pqr.z << '\n';
 		earth.Draw(shaderProgram, camera);
 		sun.Draw(lightShader, camera);
 		sat6.Draw(SatShader, camera); 
@@ -209,7 +219,8 @@ int main()
 		time+=dt;
 	}
 
-
+	file.close();
+	file2.close();
 	// Delete all the objects we've created
 	shaderProgram.Delete();
 	lightShader.Delete();
@@ -220,5 +231,4 @@ int main()
 	glfwTerminate();
 	return 0;
 }
-
 

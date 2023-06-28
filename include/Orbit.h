@@ -51,10 +51,10 @@ public:
 
 
     //sensor parameters
-    double MagScaleBias = 4.0e-9; //T
-    double MagFieldBias = MagScaleBias*  (-1 + 2.0 * (rand() % 100) / 100.0f );
+    double MagScaleBias = 2.0e-5; //T
+    double MagFieldBias = 4.0e-5; //MagScaleBias*  (-1 + 2.0 * (rand() % 100) / 100.0f );
     
-    double MagScaleNoise = 1e-9;
+    double MagScaleNoise = 1e-5;
     double MagFieldNoise = MagScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 	
     double AngleScaleBias = .0001; //rad/s
@@ -89,15 +89,15 @@ public:
 
 
     glm::vec3 bodyMagneticField;
-
+	glm::vec3 inertialMagneticField;
     glm::vec3 Bfilter = glm::vec3(0.0f);
     glm::vec3 Wfilter = glm::vec3(0.0f);
 
     glm::mat3 InvI = glm::inverse(Inertia);
 
-	void CircularOrbit(float mass, glm::vec3 Pos, glm::vec4 Color,  Shader shader, int time); 
+	void CircularOrbit(float mass, glm::vec3 Pos, glm::vec4 Color,  Shader shader, float time, float step); 
 
-	void RK4(int time);
+	void RK4(float time, float step);
 
 	std::vector<double> TwoBodyODE(float time, vector<double> statevec);
 

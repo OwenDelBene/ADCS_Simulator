@@ -112,10 +112,10 @@ std::vector<double> Orbit::TwoBodyODE(float time, vector<double> statevec)
 	return getStateVec(vel, accel, q0123dot, pqrDot);
 }
 
-void Orbit::RK4(int time)
+void Orbit::RK4(float time, float step)
 {
 
-	float step=1;
+
 	 
 
 
@@ -142,29 +142,14 @@ void Orbit::RK4(int time)
 	
 }
 
-void Orbit::CircularOrbit(float mass, glm::vec3 Pos, glm::vec4 Color, Shader shader, int time)
+void Orbit::CircularOrbit(float mass, glm::vec3 Pos, glm::vec4 Color, Shader shader, float time, float step)
 {
 
-	/*
-
-	 by  CALL sigrf(YEAR), CALL sdgrf(YEAR) or CALL spgrf(YEAR) .    */
-	 /*      Then, CALL igrfc(FI, FK, H, F) gives TotalForce (F) of that model   */
-	 /*          at the point of Lat.=FI, Long.=FK, Alt.=H                       */
-	 /*      If other components are desired, CALL igrfm(FM) .                   */
-	 /*          Here FM is an array with 6 elements, which correspond to        */
-	 /*              North(X), East(Y), Downward(Z), Horizontal(H) components,   */
-	 /*              Inclination(I) and Declination(D).
-		 */
-	
-	
-
-	//todo call for igrf
-	//lat, long, alt, gives force F
 	
 	
 	Sensor();
-	Bdot();
-	this->RK4(time);
+	//Bdot();
+	this->RK4(time, step);
 	
 
 
@@ -183,10 +168,12 @@ void Orbit::CircularOrbit(float mass, glm::vec3 Pos, glm::vec4 Color, Shader sha
 	
 
 	model = glm::translate(model , modelPos);
-	model = glm::rotate(model, q0123.x, glm::vec3(q0123.y, q0123.z, q0123.w));
+//	model = glm::rotate(model, q0123.x, glm::vec3(q0123.y, q0123.z, q0123.w));
 	//model = model * rot;
 	
+	glm::mat4 rot = glm::mat4_cast(glm::quat(q0123.w, q0123.x, q0123.y, q0123.z));
 
+	model *= rot;
 	
 
 
@@ -316,18 +303,19 @@ vector<double> Orbit::getStateVec(glm::vec3 v, glm::vec3 a, glm::vec4 q0123dot, 
 
 void Orbit::Sensor()
 {
-	MagFieldBias = MagScaleBias * (-1 + 2.0 * (rand() % 100) / 100.0f);
+	//MagFieldBias = MagScaleBias * (-1 + 2.0 * (rand() % 100) / 100.0f);
 	MagFieldNoise = MagScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
 	 AngleFieldBias = AngleScaleBias * (-1 + 2.0 * (rand() % 100) / 100.0f);
 	 AngleFieldNoise = AngleScaleNoise * (-1 + 2.0 * (rand() % 100) / 100.0f);
 
-	 glm::vec3 inertialMagneticField = bFieldI();
+	 inertialMagneticField = bFieldI();
 	 glm::mat3 temp = TIBQuat();
 	 bodyMagneticField = temp * inertialMagneticField;
 
-
-	 Bmeasure = bodyMagneticField +  (MagFieldBias + MagFieldNoise);
+	glm::vec3 bias(1,2,3);
+	bias = bias * MagFieldBias;
+	 Bmeasure = bodyMagneticField + bias  + MagFieldNoise;
 	 Wmeasure =   pqr + (AngleFieldBias + AngleFieldNoise);
 	 SensorFilter();
 
