@@ -17,6 +17,7 @@ make
 
 ## Dependencies
 GeographicLib: https://geographiclib.sourceforge.io/C++/doc/install.html
+wmm2020: https://geographiclib.sourceforge.io/C++/doc/magnetic.html#magneticinst
 GLFW: https://shnoh171.github.io/gpu%20and%20gpu%20programming/2019/08/26/installing-glfw-on-ubuntu.html
 
 
