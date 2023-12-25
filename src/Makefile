@@ -2,7 +2,7 @@ TARGET_EXEC := ADCS_Sim
 
 
 LDFLAGS := -L/usr/local/lib -lglfw -lGeographicLib
-
+CXXFLAGS := -I /usr/include/eigen3/ -I include
 BUILD_DIR := ./build
 SRC_DIRS := .
 
